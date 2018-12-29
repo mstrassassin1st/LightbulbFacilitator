@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Lightbulb Facilitator</string>
+    <string name="title_activity_courses">Courses</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string-array name="selection_courses">
+        <item>Select Category..</item>
+        <item>ON GOING</item>
+        <item>COMPLETED</item>
+    </string-array>
+</resources>
