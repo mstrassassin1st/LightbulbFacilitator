@@ -1,6 +1,7 @@
 package app.itdivision.lightbulbfacilitator.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import java.util.List;
 
 import app.itdivision.lightbulbfacilitator.Model.Course;
 import app.itdivision.lightbulbfacilitator.R;
+import app.itdivision.lightbulbfacilitator.UpdateCourse;
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHolder> {
 
@@ -41,7 +43,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
         myViewHolder.btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(mContext, UpdateCourse.class);
+                mContext.startActivity(intent);
             }
         });
     }

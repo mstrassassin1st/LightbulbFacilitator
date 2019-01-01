@@ -6,7 +6,18 @@
     <string name="title_notifications">Notifications</string>
     <string-array name="selection_courses">
         <item>Select Category..</item>
-        <item>ON GOING</item>
-        <item>COMPLETED</item>
+        <item>Information Technology</item>
+        <item>Art and Design</item>
+        <item>Physics</item>
+        <item>Music</item>
+        <item>English</item>
+        <item>Business</item>
     </string-array>
+    <string name="title_activity_balance">Balance</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
 </resources>

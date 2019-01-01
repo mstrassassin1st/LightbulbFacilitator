@@ -1,5 +1,6 @@
 package app.itdivision.lightbulbfacilitator;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -29,6 +30,7 @@ public class Courses extends AppCompatActivity implements AdapterView.OnItemSele
     RecyclerView rvCourses;
     FloatingActionButton fabAddCourse;
     List<Course> courseList;
+    BottomNavigationView navigation;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -37,13 +39,18 @@ public class Courses extends AppCompatActivity implements AdapterView.OnItemSele
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_all_courses:
-                    return true;
+                    //
+                    break;
                 case R.id.navigation_balance:
-                    return true;
+                    Intent balanceIntent = new Intent(Courses.this, Balance.class);
+                    startActivity(balanceIntent);
+                    finish();
+                    break;
                 case R.id.navigation_account:
-                    return true;
+                    //
+                    break;
             }
-            return false;
+            return true;
         }
     };
 
@@ -73,13 +80,14 @@ public class Courses extends AppCompatActivity implements AdapterView.OnItemSele
         CourseAdapter crsadapter = new CourseAdapter(this, courseList);
         rvCourses.setAdapter(crsadapter);
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         fabAddCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Courses.this, "Add Course?", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Courses.this, AddCourse.class);
+                startActivity(intent);
             }
         });
     }
@@ -87,7 +95,19 @@ public class Courses extends AppCompatActivity implements AdapterView.OnItemSele
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String text = parent.getItemAtPosition(position).toString();
-        if(text.equals("")){
+        if(text.equals("Select Category..")){
+
+        } else if(text.equals("Information Technology")){
+
+        }else if(text.equals("Art And Design")){
+
+        }else if(text.equals("Physics")){
+
+        }else if(text.equals("Music")){
+
+        }else if(text.equals("English")){
+
+        }else if(text.equals("Business")){
 
         }
     }
