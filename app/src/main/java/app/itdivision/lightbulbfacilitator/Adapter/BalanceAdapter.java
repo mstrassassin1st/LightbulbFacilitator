@@ -37,7 +37,7 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.MyViewHo
     public void onBindViewHolder(@NonNull BalanceAdapter.MyViewHolder myViewHolder, int i) {
         myViewHolder.courseName.setText(mData.get(i).getCourseName());
         myViewHolder.courseCategory.setText(mData.get(i).getCourseCategory());
-        String price = "IDR "+ Integer.toString((int) mData.get(i).getCoursePrice());
+        String price = "IDR "+ Integer.toString(mData.get(i).getCoursePrice());
         myViewHolder.coursePrice.setText(price);
 
     }

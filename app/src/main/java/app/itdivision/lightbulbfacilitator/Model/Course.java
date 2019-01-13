@@ -1,16 +1,20 @@
 package app.itdivision.lightbulbfacilitator.Model;
 
+import android.graphics.Bitmap;
+
 public class Course {
     private String CourseName;
     private String CourseCategory;
     private String CourseDesc;
-    private float CoursePrice;
+    private int CoursePrice;
+    private Bitmap thumbnail;
 
-    public Course(String courseName, String courseCategory, String courseDesc, float coursePrice) {
+    public Course(String courseName, String courseCategory, String courseDesc, int coursePrice, Bitmap thumbnail) {
         CourseName = courseName;
         CourseCategory = courseCategory;
         CourseDesc = courseDesc;
         CoursePrice = coursePrice;
+        this.thumbnail = thumbnail;
     }
 
     public String getCourseName() {
@@ -37,11 +41,19 @@ public class Course {
         CourseDesc = courseDesc;
     }
 
-    public float getCoursePrice() {
+    public int getCoursePrice() {
         return CoursePrice;
     }
 
-    public void setCoursePrice(float coursePrice) {
+    public void setCoursePrice(int coursePrice) {
         CoursePrice = coursePrice;
+    }
+
+    public Bitmap getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(Bitmap thumbnail) {
+        this.thumbnail = thumbnail;
     }
 }

@@ -40,6 +40,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
     public void onBindViewHolder(@NonNull CourseAdapter.MyViewHolder myViewHolder, int i) {
         myViewHolder.course_title.setText(mData.get(i).getCourseName());
         myViewHolder.course_category.setText(mData.get(i).getCourseCategory());
+        myViewHolder.imgThumb.setImageBitmap(mData.get(i).getThumbnail());
         myViewHolder.btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,14 +59,14 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
 
         TextView course_title;
         TextView course_category;
-        //ImageView imgThumb;
+        ImageView imgThumb;
         Button btnUpdate;
 
         public MyViewHolder(View itemView){
             super(itemView);
             course_title = (TextView) itemView.findViewById(R.id.courseTitle);
             course_category = (TextView) itemView.findViewById(R.id.courseDiv);
-            //imgThumb = (ImageView) itemView.findViewById(R.id.courseImg);
+            imgThumb = (ImageView) itemView.findViewById(R.id.courseImg);
             btnUpdate = (Button) itemView.findViewById(R.id.btnUpdate);
         }
     }
