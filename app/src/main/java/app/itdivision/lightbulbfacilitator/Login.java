@@ -32,7 +32,6 @@ public class Login extends AppCompatActivity {
         fa_email = (EditText) findViewById(R.id.fa_email);
         fa_password = (EditText) findViewById(R.id.fa_password);
         fa_btnLogin = (Button) findViewById(R.id.fa_btnLogin);
-        fa_btn_forgot_password = (Button) findViewById(R.id.fa_btn_forgot_password);
         fa_btnRegister = (Button) findViewById(R.id.fa_btnRegister);
 
         fa_btnLogin.setOnClickListener(new View.OnClickListener() {
