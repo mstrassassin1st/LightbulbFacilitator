@@ -82,7 +82,6 @@ public class AddCourse extends AppCompatActivity implements AdapterView.OnItemSe
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
                 Image.compress(Bitmap.CompressFormat.JPEG, 100, bos);
                 byte[] bArray = bos.toByteArray();
-                Toast.makeText(AddCourse.this, "Name "+ bArray, Toast.LENGTH_LONG).show();
                 Blob image = null;
                 try {
                     image = new SerialBlob(bArray);
@@ -110,7 +109,33 @@ public class AddCourse extends AppCompatActivity implements AdapterView.OnItemSe
         btnLaunch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                String nm = courseName.getText().toString();
+                String desc = courseDesc.getText().toString();
+                int price = Integer.parseInt(coursePrice.getText().toString());
+                int currFID = activeIdPassing.getActiveId();
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                Image.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                byte[] bArray = bos.toByteArray();
+                Blob image = null;
+                try {
+                    image = new SerialBlob(bArray);
+                } catch (SQLException e) {
+                    Toast.makeText(AddCourse.this, "Error! " + e.toString(), Toast.LENGTH_LONG).show();
+                }
+                Date x = Calendar.getInstance().getTime();
+                SimpleDateFormat postFormater = new SimpleDateFormat("dd MMM yyyy");
+                String finalDate = postFormater.format(x);
+
+                if(nm.equals("") || desc.equals("")|| coursecat == 0 || price == 0 || Image == null){
+                    Toast.makeText(AddCourse.this, "Failed to add Course, recheck data", Toast.LENGTH_LONG).show();
+                }else {
+                    databaseAccess.open();
+                    databaseAccess.addCourse(currFID, coursecat, nm, desc, price, 1, finalDate, image);
+                    activeIdPassing.setActiveCourseName(nm);
+                    activeIdPassing.setActiveCourseCategory(cat);
+                    databaseAccess.close();
+                    finish();
+                }
             }
         });
 
