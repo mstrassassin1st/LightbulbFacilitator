@@ -19,6 +19,7 @@ import app.itdivision.lightbulbfacilitator.Dialogs.DialogEmail;
 import app.itdivision.lightbulbfacilitator.Dialogs.DialogPassword;
 import app.itdivision.lightbulbfacilitator.Dialogs.DialogUsername;
 import app.itdivision.lightbulbfacilitator.Instance.ActiveIdPassing;
+import app.itdivision.lightbulbfacilitator.Model.Course;
 
 public class Account extends AppCompatActivity implements DialogUsername.DialogUsernameListener, DialogEmail.DialogEmailListener, DialogBankAccountNumber.DialogBankAccountNumberListener {
 
@@ -114,6 +115,7 @@ public class Account extends AppCompatActivity implements DialogUsername.DialogU
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Courses.home.finish();
                 databaseAccess.open();
                 databaseAccess.doLogout();
                 databaseAccess.close();
@@ -168,5 +170,11 @@ public class Account extends AppCompatActivity implements DialogUsername.DialogU
     @Override
     public void applyTextsBankAccountNumber(String bankAccountNumber) {
         tv_change_bankAccNum.setText(bankAccountNumber);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

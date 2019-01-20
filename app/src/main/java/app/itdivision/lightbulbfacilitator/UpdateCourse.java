@@ -1,5 +1,6 @@
 package app.itdivision.lightbulbfacilitator;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -96,16 +97,24 @@ public class UpdateCourse extends AppCompatActivity {
                 String updateURL = moduleURL.getText().toString();
                 String fixedupdateURL = updateURL.substring(updateURL.lastIndexOf('/')+1,updateURL.length());
 
-                databaseAccess.open();
-                if(isEdit){
-                    databaseAccess.setUpdateModule(currModule, updateName, updateDesc,fixedupdateURL);
-                }else {
-                    databaseAccess.addModule(find, updateName, updateDesc, fixedupdateURL);
+                if(updateName.equals("") && updateDesc.equals("") && updateURL.equals("")){
+                    Intent intent = new Intent(UpdateCourse.this, Courses.class);
+                    startActivity(intent);
+                    finish();
+                }else if(updateName.equals("") || updateDesc.equals("") || updateURL.equals("")){
+                    Toast.makeText(UpdateCourse.this, "All forms must be filled!", Toast.LENGTH_LONG).show();
+                }else{
+                    databaseAccess.open();
+                    if(isEdit){
+                        databaseAccess.setUpdateModule(currModule, updateName, updateDesc,fixedupdateURL);
+                    }else {
+                        databaseAccess.addModule(find, updateName, updateDesc, fixedupdateURL);
+                    }
+                    databaseAccess.close();
+                    Toast.makeText(UpdateCourse.this, "Module Updated!", Toast.LENGTH_LONG).show();
+                    onUpdate();
+                    isEdit = false;
                 }
-                databaseAccess.close();
-                Toast.makeText(UpdateCourse.this, "Module Updated!", Toast.LENGTH_LONG).show();
-                onUpdate();
-                isEdit = false;
             }
         });
     }
@@ -115,5 +124,10 @@ public class UpdateCourse extends AppCompatActivity {
         moduleName.setText("");
         moduleLesson.setText("");
         moduleURL.setText("");
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

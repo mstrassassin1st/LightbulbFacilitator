@@ -1,5 +1,6 @@
 package app.itdivision.lightbulbfacilitator;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -33,6 +34,8 @@ public class Courses extends AppCompatActivity implements AdapterView.OnItemSele
     List<Course> courseList;
     BottomNavigationView navigation;
 
+    public static Activity home;
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -45,12 +48,10 @@ public class Courses extends AppCompatActivity implements AdapterView.OnItemSele
                 case R.id.navigation_balance:
                     Intent balanceIntent = new Intent(Courses.this, Balance.class);
                     startActivity(balanceIntent);
-                    finish();
                     break;
                 case R.id.navigation_account:
                     Intent accountIntent = new Intent(Courses.this, Account.class);
                     startActivity(accountIntent);
-                    finish();
                     break;
             }
             return true;
@@ -61,6 +62,8 @@ public class Courses extends AppCompatActivity implements AdapterView.OnItemSele
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_courses);
+
+        home = this;
 
         select_category = (Spinner) findViewById(R.id.select_category);
         rvCourses = (RecyclerView) findViewById(R.id.rv_courses);
@@ -191,5 +194,11 @@ public class Courses extends AppCompatActivity implements AdapterView.OnItemSele
     protected void onRestart() {
         super.onRestart();
         this.recreate();
+        navigation.setSelectedItemId(R.id.navigation_all_courses);
+    }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
     }
 }

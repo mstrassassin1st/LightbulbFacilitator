@@ -179,7 +179,6 @@ public class AddCourse extends AppCompatActivity implements AdapterView.OnItemSe
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         finish();
     }
 }
