@@ -200,7 +200,7 @@ public class DatabaseAccess {
     }
 
     //Query for Add Course
-    public void addCourse(int id, int cat, String name, String Desc, int price, int QtyModule, String date, Blob image){
+    public void addCourse(int id, int cat, String name, String Desc, int price, int QtyModule, String date, byte[] image){
         db.execSQL("insert into MsCourse(FacilitatorID, CourseTypeID, CourseName, CourseDescription, CoursePrice, CourseRating, QtyModul, CourseLaunchDate, CourseImage) values " +
                 "("+id+","+ cat +",'"+name+"', '"+Desc+"','"+price+"', 0.0 ,"+QtyModule+", '"+date+"', '"+image+"')");
     }

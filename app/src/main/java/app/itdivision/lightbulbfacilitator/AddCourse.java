@@ -26,7 +26,6 @@ import java.util.Date;
 
 import app.itdivision.lightbulbfacilitator.Database.DatabaseAccess;
 import app.itdivision.lightbulbfacilitator.Instance.ActiveIdPassing;
-import app.itdivision.lightbulbfacilitator.Serial.SerialBlob;
 
 public class AddCourse extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -80,14 +79,8 @@ public class AddCourse extends AppCompatActivity implements AdapterView.OnItemSe
                 int price = Integer.parseInt(coursePrice.getText().toString());
                 int currFID = activeIdPassing.getActiveId();
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                Image.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                Image.compress(Bitmap.CompressFormat.PNG, 0, bos);
                 byte[] bArray = bos.toByteArray();
-                Blob image = null;
-                try {
-                    image = new SerialBlob(bArray);
-                } catch (SQLException e) {
-                    Toast.makeText(AddCourse.this, "Error! " + e.toString(), Toast.LENGTH_LONG).show();
-                }
                 Date x = Calendar.getInstance().getTime();
                 SimpleDateFormat postFormater = new SimpleDateFormat("dd MMM yyyy");
                 String finalDate = postFormater.format(x);
@@ -96,7 +89,7 @@ public class AddCourse extends AppCompatActivity implements AdapterView.OnItemSe
                     Toast.makeText(AddCourse.this, "Failed to add Course, recheck data", Toast.LENGTH_LONG).show();
                 }else {
                     databaseAccess.open();
-                    databaseAccess.addCourse(currFID, coursecat, nm, desc, price, 1, finalDate, image);
+                    databaseAccess.addCourse(currFID, coursecat, nm, desc, price, 1, finalDate, bArray);
                     activeIdPassing.setActiveCourseName(nm);
                     activeIdPassing.setActiveCourseCategory(cat);
                     databaseAccess.close();
@@ -114,14 +107,8 @@ public class AddCourse extends AppCompatActivity implements AdapterView.OnItemSe
                 int price = Integer.parseInt(coursePrice.getText().toString());
                 int currFID = activeIdPassing.getActiveId();
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                Image.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                Image.compress(Bitmap.CompressFormat.PNG, 0, bos);
                 byte[] bArray = bos.toByteArray();
-                Blob image = null;
-                try {
-                    image = new SerialBlob(bArray);
-                } catch (SQLException e) {
-                    Toast.makeText(AddCourse.this, "Error! " + e.toString(), Toast.LENGTH_LONG).show();
-                }
                 Date x = Calendar.getInstance().getTime();
                 SimpleDateFormat postFormater = new SimpleDateFormat("dd MMM yyyy");
                 String finalDate = postFormater.format(x);
@@ -130,7 +117,7 @@ public class AddCourse extends AppCompatActivity implements AdapterView.OnItemSe
                     Toast.makeText(AddCourse.this, "Failed to add Course, recheck data", Toast.LENGTH_LONG).show();
                 }else {
                     databaseAccess.open();
-                    databaseAccess.addCourse(currFID, coursecat, nm, desc, price, 1, finalDate, image);
+                    databaseAccess.addCourse(currFID, coursecat, nm, desc, price, 1, finalDate, bArray);
                     activeIdPassing.setActiveCourseName(nm);
                     activeIdPassing.setActiveCourseCategory(cat);
                     databaseAccess.close();
