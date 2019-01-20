@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import app.itdivision.lightbulbfacilitator.Instance.ActiveIdPassing;
 import app.itdivision.lightbulbfacilitator.Model.Course;
 import app.itdivision.lightbulbfacilitator.R;
 import app.itdivision.lightbulbfacilitator.UpdateCourse;
@@ -38,6 +39,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull CourseAdapter.MyViewHolder myViewHolder, int i) {
+        final int x = i;
         myViewHolder.course_title.setText(mData.get(i).getCourseName());
         myViewHolder.course_category.setText(mData.get(i).getCourseCategory());
         myViewHolder.imgThumb.setImageBitmap(mData.get(i).getThumbnail());
@@ -45,6 +47,11 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, UpdateCourse.class);
+                ActiveIdPassing activeIdPassing = ActiveIdPassing.getInstance();
+                String courseName = mData.get(x).getCourseName();
+                String courseCategory = mData.get(x).getCourseCategory();
+                activeIdPassing.setActiveCourseCategory(courseCategory);
+                activeIdPassing.setActiveCourseName(courseName);
                 mContext.startActivity(intent);
             }
         });

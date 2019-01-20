@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
+import java.sql.Blob;
+
 
 public class DatabaseAccess {
     private SQLiteOpenHelper openHelper;
@@ -71,6 +73,14 @@ public class DatabaseAccess {
     }
 
     //Query for Register
+    public int checkEmail(String email){
+        Cursor cursor = db.rawQuery("select count(FacilitatorEmail) from MsFacilitator where FacilitatorEmail = '"+ email +"'", null);
+        int chck = 0;
+        if(cursor.moveToFirst()){
+            chck = cursor.getInt(0);
+        }
+        return chck;
+    }
     public void getRegistered (String username, String email, String password, String BankAcc ,String dateJoined){
         db.execSQL("insert into MsFacilitator(FacilitatorName, FacilitatorEmail, FacilitatorPassword, FacilitatorHint, FacilitatorBalance, FacilitatorBankAccount, FacilitatorDateJoined)\n" +
                 "values ('"+ username +"','"+ email + "','" + password + "','"+ password +"','0', '"+ BankAcc +"','"+ dateJoined +"')");
@@ -146,5 +156,52 @@ public class DatabaseAccess {
     public Cursor getFacilitatorData(int id){
         Cursor cursor = db.rawQuery("select FacilitatorName, FacilitatorEmail from MsFacilitator where FacilitatorID LIKE '" + id + "'", null);
         return cursor;
+    }
+
+    //Query for update course
+    public int getCourseID(String name, String category){
+        String q = "select CourseID from MsCourse A JOIN MsCourseType B ON A.CourseTypeID = B.CourseTypeID where CourseName = '"+ name +"' and CourseTypeName = '"+ category +"'";
+        Cursor cursor = db.rawQuery(q, null);
+        int result = 0;
+        if(cursor.moveToFirst()){
+            result = cursor.getInt(0);
+        }
+        return result;
+    }
+
+    public Cursor getLesson(int id){
+        Cursor lessons = db.rawQuery("select ModuleName, ModuleDescription, ModuleURL from Module_of_Course where CourseID = '"+ id +"'",null);
+        return lessons;
+    }
+    public String getLessonURL(int id, String name, String desc ){
+        Cursor lessons = db.rawQuery("select ModuleURL from Module_of_Course where CourseID = '"+ id +"' AND ModuleName = '"+ name +"' AND ModuleDescription = '"+ desc +"'",null);
+        String URL = " ";
+        if(lessons.moveToFirst()){
+            URL = lessons.getString(0);
+        }
+        return URL;
+    }
+    public int getLessonID(int id, String name, String desc ){
+        Cursor lessons = db.rawQuery("select ModuleID from Module_of_Course where CourseID = '"+ id +"' AND ModuleName = '"+ name +"' AND ModuleDescription = '"+ desc +"'",null);
+        int resid = 0;
+        if(lessons.moveToFirst()){
+            resid = lessons.getInt(0);
+        }
+        return resid;
+    }
+    public void setUpdateModule(int id, String name, String desc, String URL){
+        db.execSQL("update Module_of_course set ModuleName = '" + name + "', ModuleDescription = '"+ desc +"', ModuleURL = '"+ URL +"' where ModuleID = '"+ id +"'");
+    }
+    public void addModule(int CID, String name, String desc, String URL){
+        db.execSQL("insert into Module_of_course(CourseID, ModuleName, ModuleDescription, ModuleURL) values ('"+ CID +"', '"+ name +"' , '"+ desc +"', '"+ URL +"')");
+    }
+    public void deleteModule(int id){
+        db.execSQL("delete from Module_of_course where ModuleID = '"+ id +"'");
+    }
+
+    //Query for Add Course
+    public void addCourse(int id, int cat, String name, String Desc, int price, int QtyModule, String date, Blob image){
+        db.execSQL("insert into MsCourse(FacilitatorID, CourseTypeID, CourseName, CourseDescription, CoursePrice, CourseRating, QtyModul, CourseLaunchDate, CourseImage) values " +
+                "("+id+","+ cat +",'"+name+"', '"+Desc+"','"+price+"', 0.0 ,"+QtyModule+", '"+date+"', '"+image+"')");
     }
 }

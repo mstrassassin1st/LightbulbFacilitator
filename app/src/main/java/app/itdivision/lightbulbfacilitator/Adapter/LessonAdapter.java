@@ -37,18 +37,23 @@ public class LessonAdapter extends RecyclerView.Adapter<LessonAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull LessonAdapter.MyViewHolder myViewHolder, int i) {
+        final int x = i;
         myViewHolder.lessonName.setText(mData.get(i).getLessonName());
         myViewHolder.lessonDesc.setText(mData.get(i).getLessonDesc());
         myViewHolder.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                final String lessonName = mData.get(x).getLessonName();
+                final String lessonDesc = mData.get(x).getLessonDesc();
+                mBtnEditLessonClickListener.onBtnEditLessonClicked(lessonName, lessonDesc);
             }
         });
         myViewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                final String lessonName = mData.get(x).getLessonName();
+                final String lessonDesc = mData.get(x).getLessonDesc();
+                mBtnDeleteLessonClickListener.onBtnDeleteLessonClicked(lessonName,lessonDesc);
             }
         });
     }
@@ -74,5 +79,24 @@ public class LessonAdapter extends RecyclerView.Adapter<LessonAdapter.MyViewHold
         }
     }
 
+    public interface OnBtnEditLessonClickListener{
+        void onBtnEditLessonClicked(String LessonName, String LessonDesc);
+    }
+
+    private OnBtnEditLessonClickListener mBtnEditLessonClickListener;
+
+    public void setOnBtnEditLessonClickListener(OnBtnEditLessonClickListener listener){
+        mBtnEditLessonClickListener = listener;
+    }
+
+    public interface OnBtnDeleteLessonClickListener{
+        void onBtnDeleteLessonClicked(String LessonName, String LessonDesc);
+    }
+
+    private OnBtnDeleteLessonClickListener mBtnDeleteLessonClickListener;
+
+    public void setOnBtnDeleteLessonClickListener(OnBtnDeleteLessonClickListener listener){
+        mBtnDeleteLessonClickListener = listener;
+    }
 
 }

@@ -60,7 +60,6 @@ public class Register extends AppCompatActivity {
                 Date x = Calendar.getInstance().getTime();
                 SimpleDateFormat postFormater = new SimpleDateFormat("dd MMM yyyy");
                 String finalDate = postFormater.format(x);
-                Toast.makeText(Register.this, finalDate, Toast.LENGTH_LONG).show();
 
                 if(fa_first.equals("") || fa_em.equals("") || fa_pw.equals("") ||fa_rek.equals("")|| fa_confpw.equals("")){
                     Toast.makeText(Register.this, "All forms must be filled!", Toast.LENGTH_SHORT).show();
@@ -76,25 +75,31 @@ public class Register extends AppCompatActivity {
 
                 }else if(fa_confpw.equals(fa_pw)) {
                     //dbQuery
-                    DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+                    DatabaseAccess databaseAccess = DatabaseAccess.getInstance(Register.this);
                     databaseAccess.open();
-                    databaseAccess.getRegistered(name, fa_em, fa_pw, fa_rek, finalDate);
-                    int id = databaseAccess.getLogin(fa_em, fa_pw);
-                    if(id > 0){
-                        showToast();
-                        ActiveIdPassing activeIdPassing = ActiveIdPassing.getInstance();
-                        activeIdPassing.setActiveId(id);
-                        databaseAccess.setHasSignedIn(id);
-                        Intent intent = new Intent(Register.this, Courses.class);
-                        startActivity(intent);
-                        databaseAccess.close();
-                        finish();
+                    int chck = databaseAccess.checkEmail(fa_em);
+                    if(chck == 0) {
+                        databaseAccess.getRegistered(name, fa_em, fa_pw, fa_rek, finalDate);
+                        int id = databaseAccess.getLogin(fa_em, fa_pw);
+                        if (id > 0) {
+                            showToast();
+                            ActiveIdPassing activeIdPassing = ActiveIdPassing.getInstance();
+                            activeIdPassing.setActiveId(id);
+                            databaseAccess.setHasSignedIn(id);
+                            Intent intent = new Intent(Register.this, Courses.class);
+                            startActivity(intent);
+                            databaseAccess.close();
+                            finish();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Registration Failed", Toast.LENGTH_LONG).show();
+                            databaseAccess.close();
+                        }
                     }else{
-                        Toast.makeText(getApplicationContext(), "Registration Failed", Toast.LENGTH_LONG).show();
-                        databaseAccess.close();
+                        Toast.makeText(Register.this, "You've already registered! Try Logging in", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(Register.this, Login.class);
+                        startActivity(intent);
+                        finish();
                     }
-
-
                 }else{
                     Toast.makeText(Register.this, "Password and confirm password do not match!", Toast.LENGTH_SHORT).show();
                     fa_password.setText("");

@@ -111,4 +111,9 @@ public class Balance extends AppCompatActivity {
         recycler_balance.setAdapter(adapter);
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        this.recreate();
+    }
 }
